@@ -19,5 +19,6 @@
     "gradient-string": "^2.0.2",
     "inquirer": "^11.0.2",
     "nanospinner": "^1.1.0"
-  }
+  },
+  "bin": "./index.js"
 }
