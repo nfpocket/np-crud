@@ -6,11 +6,8 @@ import fs from "fs";
 import gradient from "gradient-string";
 import inquirer from "inquirer";
 import { createSpinner } from "nanospinner";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
+import path from "path";
 import { getCreateContent, getDeleteContent, getGetContent, getListContent, getPutContent } from "./contents.js";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 async function getPath() {
   const pathResponse = await inquirer.prompt([
@@ -149,10 +146,10 @@ const generateCrud = async (crudPath, modelName, crudTypes) => {
 
     try {
       const fullPath = `${crudPath}/${modelName}/${fileName}`;
-      const absolutePath = path.join(__dirname, fullPath);
+      const absolutePath = path.join(process.cwd(), fullPath);
 
-      if (!fs.existsSync(path.join(__dirname, crudPath, modelName))) {
-        fs.mkdirSync(path.join(__dirname, crudPath, modelName), { recursive: true });
+      if (!fs.existsSync(path.join(process.cwd(), crudPath, modelName))) {
+        fs.mkdirSync(path.join(process.cwd(), crudPath, modelName), { recursive: true });
       }
 
       fs.writeFileSync(absolutePath, content);
