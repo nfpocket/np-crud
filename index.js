@@ -9,6 +9,12 @@ import { createSpinner } from "nanospinner";
 import path from "path";
 import { getCreateContent, getDeleteContent, getGetContent, getListContent, getPutContent } from "./contents.js";
 
+// Handle CTRL+C gracefully
+process.on("SIGINT", () => {
+  console.log(chalk.red("\nProcess interrupted. Exiting gracefully..."));
+  process.exit(0);
+});
+
 async function getPath() {
   const pathResponse = await inquirer.prompt([
     {
@@ -167,12 +173,17 @@ const generateCrud = async (crudPath, modelName, crudTypes) => {
   });
 };
 
-console.log(gradient.pastel(figlet.textSync("NP-CRUD", { horizontalLayout: "full" })));
+try {
+  console.log(gradient.pastel(figlet.textSync("NP-CRUD", { horizontalLayout: "full" })));
 
-console.log(chalk.yellow("This script will create a new model-CRUD in the specified path. (Nuxt + Prisma)"));
+  console.log(chalk.yellow("This script will create a new model-CRUD in the specified path. (Nuxt + Prisma)"));
 
-const crudPath = await getPath();
-const modelName = await getModelName();
-const crudTypes = await getCrudTypes(modelName);
+  const crudPath = await getPath();
+  const modelName = await getModelName();
+  const crudTypes = await getCrudTypes(modelName);
 
-await generateCrud(crudPath, modelName, crudTypes);
+  await generateCrud(crudPath, modelName, crudTypes);
+} catch (error) {
+  console.log(chalk.red("\nPrompt interrupted. Exiting gracefully..."));
+  process.exit(0);
+}
