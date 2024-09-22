@@ -7,7 +7,7 @@
 To install the dependencies, run:
 
 ```sh
-npm install
+npm install -g
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install
 To start the CLI, run:
 
 ```sh
-npm start
+np-crud
 ```
 
 The CLI will prompt you to enter the model name, select the CRUD operations to create, and specify the path for the new model-CRUD.
